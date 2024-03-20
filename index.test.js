@@ -15,7 +15,7 @@ describe('Band, Musician, and Song Models', () => {
     test('can create a Band', async () => {
         // TODO - test creating a band
         const newBand = await Band.create({ name: 'Linkin Park', genre: 'Rock' });
-        expect('newBand.name').toBe('Linkin Park');
+        expect(newBand.name).toBe('Linkin Park');
     })
 
     test('can create a Musician', async () => {
@@ -35,7 +35,7 @@ describe('Band, Musician, and Song Models', () => {
         const newBand = await Band.create({ name: 'Metallica', genre: 'Metal' });
         await newBand.update({ genre: 'Rock' });
         const updatedBand = await Band.findByPk(newBand.id);
-        expect('updateBand.genre').toBe('Rock');
+        expect(updatedBand.genre).toBe('Rock');
     })
 
     test('can update a Musician', async () => {
@@ -59,7 +59,7 @@ describe('Band, Musician, and Song Models', () => {
         const newBand = await Band.create({ name: 'AC/DC', genre: 'Rock' });
         await newBand.destroy();
         const deletedBand = await Band.findByPk(newBand.id);
-        expect('deletedBand').toBeNull();
+        expect(deletedBand).toBeNull();
     })
 
     test('can delete a Musician', async () => {
