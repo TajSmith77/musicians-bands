@@ -77,4 +77,37 @@ describe('Band, Musician, and Song Models', () => {
         const deletedSong = await Song.findOne({ where: { title: 'Under Pressure' } });
         expect(deletedSong).toBeNull();
     })
+    test('can add a Musician to a Band', async () => {
+        //testing association between Musician and Band
+        let bands = await Band.findAll();
+        if (bands.length === 0)
+        {
+            const newBand = await Band.create({ name: 'AC/DC', genre: 'Rock' });
+            const newBand1 = await Band.create({ name: 'ATL', genre: 'Alternative' });
+        }
+
+        bands = await Band.findAll();
+        const testMusician = await Musician.create({name: 'Josh Vietti', instrument: 'violin'})
+
+        await bands[0].addMusician(testMusician);
+        const Musicians = await bands[0].getMusicians();
+
+        expect(Musicians.length).toBe(1);
+    })
+    test('can add a Song to a Band', async () => {
+        //testing association between Song and Band
+        const newBand = await Band.create({ name: 'AC/DC', genre: 'Rock' });
+        const newBand1 = await Band.create({ name: 'ATL', genre: 'Alternative' });
+        let bands = await Band.findAll();
+
+        const testSong = await Song.create({title: 'Under Pressure', year: 2014, length: 9.2});
+        const testSong1 = await Song.create({title: 'City of Stars', year: 2015, length: 6.17});
+
+        await bands[0].addSong(testSong);
+        await bands[0].addSong(testSong1);
+
+        const songList = await bands[0].getSongs();
+        
+        expect(songList).toHaveLength(2);
+    })
 })
